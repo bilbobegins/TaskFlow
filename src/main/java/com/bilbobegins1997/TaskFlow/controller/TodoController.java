@@ -40,7 +40,7 @@ public class TodoController {
             throw new RuntimeException("User is not authenticated");
         }
 
-        String username = authentication.getName(); // `getName()` returns the username
+        String username = authentication.getName();
 
         TodoUser user = userRepository.findByLogin(username).orElseThrow(() -> new NoSuchElementException("no such user with login: " + username  ) );
 
@@ -48,13 +48,13 @@ public class TodoController {
     }
 
     @GetMapping("/todo/{id}")
-    public Todo getTodoById(@PathVariable Long id) {  // Use Long for ID
+    public Todo getTodoById(@PathVariable Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new RuntimeException("User is not authenticated");
         }
 
-        String username = authentication.getName(); // Get authenticated username
+        String username = authentication.getName();
         TodoUser user = userRepository.findByLogin(username)
                 .orElseThrow(() -> new NoSuchElementException("No user found with login: " + username));
 

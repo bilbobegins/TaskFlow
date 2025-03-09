@@ -33,14 +33,6 @@ public class AuthController {
         this.manager = manager;
     }
 
-//    @PostMapping("/token")
-//    public String token(Authentication authentication){
-//        LOG.debug("Token requested for user: '(}'", authentication.getName());
-//        String token = tokenService.generateToken(authentication);
-//        LOG. debug ("Token granged (}", token);
-//        return token;
-//    }
-
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest request){
         String response = todoUserService.registerUser(request);
