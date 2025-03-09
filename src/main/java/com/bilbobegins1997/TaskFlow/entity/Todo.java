@@ -1,8 +1,12 @@
 package com.bilbobegins1997.TaskFlow.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -12,47 +16,43 @@ public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private   String title;
+    private String title;
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "user_id")
-    private   User user;
+    @JoinColumn(name = "todo_user_id") // This defines the foreign key
+    private TodoUser todoUser;
+    @OneToMany(mappedBy = "todo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Task> tasks = new ArrayList<>();
 
-    private Long userTodoId;
-    private  String body;
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public Long getUserTodoId() {
-        return userTodoId;
-    }
-
-    public void setUserTodoId(Long userTodoId) {
-        this.userTodoId = userTodoId;
-    }
 
     public Long getId() {
         return id;
     }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
+
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public TodoUser getTodoUser() {
+        return todoUser;
+    }
+
+    public void setTodoUser(TodoUser todoUser) {
+        this.todoUser = todoUser;
+    }
+
+
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }
